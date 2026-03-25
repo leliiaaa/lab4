@@ -8,7 +8,7 @@ const SortLib = {
             }
         }
         if (undefinedCount > 0) {
-            console.warn(`Знайдено розріджений масив: ${undefinedCount} елементів undefined.`); [cite: 35]
+            console.warn(`Знайдено розріджений масив: ${undefinedCount} елементів undefined.`);
         }
         return undefinedCount;
     },
@@ -30,7 +30,7 @@ const SortLib = {
                 }
             }
         }
-        console.log(`Bubble Sort: Порівнянь: ${comparisons}, Обмінів: ${swaps}`); [cite: 33]
+        console.log(`Bubble Sort: Порівнянь: ${comparisons}, Обмінів: ${swaps}`); 
         return arr;
     },
 
