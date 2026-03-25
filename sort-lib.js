@@ -1,5 +1,4 @@
 const SortLib = {
-    //метод для перевірки та підрахунку undefined
     _checkSparse: function(arr) {
         let undefinedCount = 0;
         for (let i = 0; i < arr.length; i++) {
@@ -8,18 +7,16 @@ const SortLib = {
             }
         }
         if (undefinedCount > 0) {
-            console.warn(`Знайдено розріджений масив: ${undefinedCount} елементів undefined.`);
+            console.warn("Виявлено розріджений масив: " + undefinedCount + " елементів undefined.");
         }
         return undefinedCount;
     },
 
-    //cортування обміну (Bubble Sort)
     bubbleSort: function(inputArr, ascending = true) {
         let arr = [...inputArr];
         this._checkSparse(arr);
         let comparisons = 0;
         let swaps = 0;
-
         for (let i = 0; i < arr.length; i++) {
             for (let j = 0; j < arr.length - i - 1; j++) {
                 comparisons++;
@@ -30,17 +27,15 @@ const SortLib = {
                 }
             }
         }
-        console.log(`Bubble Sort: Порівнянь: ${comparisons}, Обмінів: ${swaps}`); 
+        console.log("Метод обміну (Bubble) - Порівнянь: " + comparisons + ", Обмінів: " + swaps);
         return arr;
     },
 
-    //cортування мін ел (Selection Sort)
     selectionSort: function(inputArr, ascending = true) {
         let arr = [...inputArr];
         this._checkSparse(arr);
         let comparisons = 0;
         let swaps = 0;
-
         for (let i = 0; i < arr.length; i++) {
             let minMaxIdx = i;
             for (let j = i + 1; j < arr.length; j++) {
@@ -53,17 +48,15 @@ const SortLib = {
                 swaps++;
             }
         }
-        console.log(`Selection Sort: Порівнянь: ${comparisons}, Обмінів: ${swaps}`);
+        console.log("Метод мінімальних елементів - Порівнянь: " + comparisons + ", Обмінів: " + swaps);
         return arr;
     },
 
-    //cортування вставок (Insertion Sort)
     insertionSort: function(inputArr, ascending = true) {
         let arr = [...inputArr];
         this._checkSparse(arr);
         let comparisons = 0;
         let moves = 0;
-
         for (let i = 1; i < arr.length; i++) {
             let key = arr[i];
             let j = i - 1;
@@ -78,18 +71,16 @@ const SortLib = {
             }
             arr[j + 1] = key;
         }
-        console.log(`Insertion Sort: Порівнянь: ${comparisons}, Переміщень: ${moves}`);
+        console.log("Метод вставок - Порівнянь: " + comparisons + ", Переміщень: " + moves);
         return arr;
     },
 
-    //cортування Шелла (Shell Sort)
     shellSort: function(inputArr, ascending = true) {
         let arr = [...inputArr];
         this._checkSparse(arr);
         let comparisons = 0;
         let moves = 0;
         let n = arr.length;
-
         for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
             for (let i = gap; i < n; i++) {
                 let temp = arr[i];
@@ -106,17 +97,15 @@ const SortLib = {
                 arr[j] = temp;
             }
         }
-        console.log(`Shell Sort: Порівнянь: ${comparisons}, Переміщень: ${moves}`);
+        console.log("Метод Шелла - Порівнянь: " + comparisons + ", Переміщень: " + moves);
         return arr;
     },
 
-    //сортування Хоара (Quick Sort)
     quickSort: function(inputArr, ascending = true) {
         let arr = [...inputArr];
         this._checkSparse(arr);
         let comparisons = 0;
         let swaps = 0;
-
         const partition = (low, high) => {
             let pivot = arr[Math.floor((low + high) / 2)];
             let i = low;
@@ -133,15 +122,13 @@ const SortLib = {
             }
             return i;
         };
-
         const sort = (low, high) => {
             let index = partition(low, high);
             if (low < index - 1) sort(low, index - 1);
             if (index < high) sort(index, high);
         };
-
-        sort(0, arr.length - 1);
-        console.log(`Quick Sort: Порівнянь: ~${comparisons}, Обмінів: ${swaps}`);
+        if (arr.length > 1) sort(0, arr.length - 1);
+        console.log("Метод Хоара (Quick) - Порівнянь: ~" + comparisons + ", Обмінів: " + swaps);
         return arr;
     }
 };
