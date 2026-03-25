@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна 4</title>
+</head>
+<body>
+    <h1>Результати сортування (див. консоль (F12))</h1>
+    <script src="sort-lib.js"></script>
+    <script>
+        //масив (100 елементів)
+        const normalArray = Array.from({length: 100}, () => Math.floor(Math.random() * 1000));
+        
+        // pозріджений масив (100 елементів)
+        const sparseArray = [10, 5, 100];
+        sparseArray[99] = 42; 
 
+        console.log("--- ТЕСТ: Звичайний масив ---");
+        SortLib.bubbleSort(normalArray, true);
+        SortLib.quickSort(normalArray, true);
+
+        console.log("--- ТЕСТ: Розріджений масив ---");
+        SortLib.selectionSort(sparseArray, true);
+    </script>
+</body>
+</html>
