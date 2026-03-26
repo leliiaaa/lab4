@@ -2,10 +2,11 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Лабораторна робота №4</title>
+    <title>Лабораторна робота №4 - Тестування</title>
 </head>
 <body>
     <h1>Результати сортування виведено у консоль (F12)</h1>
+    
     <script src="sort-lib.js"></script>
     <script>
         const normalData = Array.from({length: 100}, () => Math.floor(Math.random() * 1000));
@@ -13,19 +14,19 @@
         const sparseData = [10, 5, 8];
         sparseData[105] = 99; 
 
-        console.log("--- ТЕСТ 1: Нерозріджений масив (100 елементів) ---");
-        SortLib.bubbleSort(normalData);
-        SortLib.selectionSort(normalData);
-        SortLib.insertionSort(normalData);
-        SortLib.shellSort(normalData);
-        SortLib.quickSort(normalData);
+        function runTest(array, label, ascending = true) {
+            console.log(`\n=== ${label} ===`);
+            
+            console.log("Початковий масив:", array);
 
-        console.log("--- ТЕСТ 2: Розріджений масив (100+ елементів) ---");
-        SortLib.bubbleSort(sparseData, false);
-        SortLib.selectionSort(sparseData, false);
-        SortLib.insertionSort(sparseData, false);
-        SortLib.shellSort(sparseData, false);
-        SortLib.quickSort(sparseData, false);
+            const result = SortLib.bubbleSort(array, ascending);
+
+            console.log("Результат сортування:", result);
+        }
+
+        runTest(normalData, "ТЕСТ 1: Нерозріджений масив (Зростання)", true);
+
+        runTest(sparseData, "ТЕСТ 2: Розріджений масив (Спадання)", false);
     </script>
 </body>
 </html>
