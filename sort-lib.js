@@ -1,5 +1,4 @@
-
-const MySortLib = {
+const SortLib = {
   
     printStats: function(methodName, comparisons, swaps, hasUndefined) {
         console.log(`--- ${methodName} ---`);
