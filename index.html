@@ -6,27 +6,8 @@
 </head>
 <body>
     <h1>Результати сортування виведено у консоль (F12)</h1>
-    
-    <script src="sort-lib.js"></script>
-    <script>
-        const normalData = Array.from({length: 100}, () => Math.floor(Math.random() * 1000));
-        
-        const sparseData = [10, 5, 8];
-        sparseData[105] = 99; 
 
-        function runTest(array, label, ascending = true) {
-            console.log(`\n=== ${label} ===`);
-            
-            console.log("Початковий масив:", array);
-
-            const result = SortLib.bubbleSort(array, ascending);
-
-            console.log("Результат сортування:", result);
-        }
-
-        runTest(normalData, "ТЕСТ 1: Нерозріджений масив (Зростання)", true);
-
-        runTest(sparseData, "ТЕСТ 2: Розріджений масив (Спадання)", false);
-    </script>
+    <script src="main-sort.js"></script>   
+    <script src="sort-lib.js"></script> 
 </body>
 </html>
