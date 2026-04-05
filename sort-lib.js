@@ -7,6 +7,7 @@ const SortLib = {
         if (hasUndefined) {
             console.log("Повідомлення: У масиві виявлено undefined-елементи. Їх переміщено в кінець.");
         }
+      console.log("Результат сортування:", arr);
     },
 
     
