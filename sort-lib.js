@@ -1,6 +1,6 @@
 const SortLib = {
   
-    printStats: function(methodName, comparisons, swaps, hasUndefined) {
+    printStats: function(methodName, comparisons, swaps, hasUndefined, arr) {
         console.log(`--- ${methodName} ---`);
         console.log(`Порівнянь: ${comparisons}`);
         console.log(`Обмінів/Переміщень: ${swaps}`);
@@ -46,7 +46,7 @@ const SortLib = {
             }
         }
         this.postprocessArray(arr, clean, undefinedCount);
-        this.printStats("Сортування обміном", comparisons, swaps, undefinedCount > 0);
+        this.printStats("Сортування обміном", comparisons, swaps, undefinedCount > 0? arr);
     },
 
     
@@ -69,7 +69,7 @@ const SortLib = {
             }
         }
         this.postprocessArray(arr, clean, undefinedCount);
-        this.printStats("Сортування мінімальних елементів", comparisons, swaps, undefinedCount > 0);
+        this.printStats("Сортування мінімальних елементів", comparisons, swaps, undefinedCount > 0, arr);
     },
 
    
@@ -92,7 +92,7 @@ const SortLib = {
             clean[j + 1] = key;
         }
         this.postprocessArray(arr, clean, undefinedCount);
-        this.printStats("Сортування вставками", comparisons, swaps, undefinedCount > 0);
+        this.printStats("Сортування вставками", comparisons, swaps, undefinedCount > 0, arr);
     },
 
    
@@ -117,7 +117,7 @@ const SortLib = {
             }
         }
         this.postprocessArray(arr, clean, undefinedCount);
-        this.printStats("Сортування Шелла", comparisons, swaps, undefinedCount > 0);
+        this.printStats("Сортування Шелла", comparisons, swaps, undefinedCount > 0, arr);
     },
 
     
@@ -145,6 +145,6 @@ const SortLib = {
 
         sort(clean, 0, clean.length - 1);
         this.postprocessArray(arr, clean, undefinedCount);
-        this.printStats("Сортування Хоара (QuickSort)", comparisons, swaps, undefinedCount > 0);
+        this.printStats("Сортування Хоара (QuickSort)", comparisons, swaps, undefinedCount > 0, arr);
     }
 };
