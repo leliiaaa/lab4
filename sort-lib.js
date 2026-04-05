@@ -46,7 +46,7 @@ const SortLib = {
             }
         }
         this.postprocessArray(arr, clean, undefinedCount);
-        this.printStats("Сортування обміном", comparisons, swaps, undefinedCount > 0? arr);
+        this.printStats("Сортування обміном", comparisons, swaps, undefinedCount > 0, arr);
     },
 
     
