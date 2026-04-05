@@ -4,14 +4,14 @@ function generateArray(size) {
 
 const baseArr = generateArray(100);
 
-console.log("%c1. Нерозріджений масив (100 елементів) ", "background: #ff00ff; color: #fff");
+console.log("%c 1. Нерозріджений масив (100 елементів) ", "background: #ff00ff; color: #fff");
 MySortLib.bubbleSort([...baseArr]);
 MySortLib.selectionSort([...baseArr]);
 MySortLib.insertionSort([...baseArr]);
 MySortLib.shellSort([...baseArr]);
 MySortLib.quickSort([...baseArr]);
 
-console.log("%c2. Розріджений масив (100 елементів) ", "background: #ff00ff; color: #ff69b4");
+console.log("%c 2. Розріджений масив (100 елементів) ", "background: #ff00ff; color: #ff69b4");
 
 let sparseArr = generateArray(50);
 sparseArr.length = 100; 
