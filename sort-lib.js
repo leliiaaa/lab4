@@ -1,134 +1,150 @@
-const SortLib = {
-    _checkSparse: function(arr) {
-        let undefinedCount = 0;
-        for (let i = 0; i < arr.length; i++) {
-            if (!(i in arr) || arr[i] === undefined) {
-                undefinedCount++;
-            }
+
+const MySortLib = {
+  
+    printStats: function(methodName, comparisons, swaps, hasUndefined) {
+        console.log(`--- ${methodName} ---`);
+        console.log(`Порівнянь: ${comparisons}`);
+        console.log(`Обмінів/Переміщень: ${swaps}`);
+        if (hasUndefined) {
+            console.log("Повідомлення: У масиві виявлено undefined-елементи. Їх переміщено в кінець.");
         }
-        if (undefinedCount > 0) {
-            console.warn("Виявлено розріджений масив: " + undefinedCount + " елементів undefined.");
-        }
-        return undefinedCount;
     },
 
-    bubbleSort: function(inputArr, ascending = true) {
-        let arr = [...inputArr];
-        this._checkSparse(arr);
-        let comparisons = 0;
-        let swaps = 0;
+    
+    preprocessArray: function(arr) {
+        const clean = [];
+        let undefinedCount = 0;
         for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < arr.length - i - 1; j++) {
+            if (arr[i] === undefined) {
+                undefinedCount++;
+            } else {
+                clean.push(arr[i]);
+            }
+        }
+        return { clean, undefinedCount };
+    },
+
+    
+    postprocessArray: function(originalArr, sortedClean, undefinedCount) {
+        for (let i = 0; i < sortedClean.length; i++) originalArr[i] = sortedClean[i];
+        for (let i = 0; i < undefinedCount; i++) originalArr[sortedClean.length + i] = undefined;
+    },
+
+    
+    bubbleSort: function(arr, ascending = true) {
+        let { clean, undefinedCount } = this.preprocessArray(arr);
+        let n = clean.length;
+        let comparisons = 0, swaps = 0;
+
+        for (let i = 0; i < n - 1; i++) {
+            for (let j = 0; j < n - i - 1; j++) {
                 comparisons++;
-                let condition = ascending ? arr[j] > arr[j + 1] : arr[j] < arr[j + 1];
-                if (condition) {
-                    [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                if (ascending ? clean[j] > clean[j + 1] : clean[j] < clean[j + 1]) {
+                    [clean[j], clean[j + 1]] = [clean[j + 1], clean[j]];
                     swaps++;
                 }
             }
         }
-        console.log("Метод обміну (Bubble) - Порівнянь: " + comparisons + ", Обмінів: " + swaps);
-        return arr;
+        this.postprocessArray(arr, clean, undefinedCount);
+        this.printStats("Сортування обміном", comparisons, swaps, undefinedCount > 0);
     },
 
-    selectionSort: function(inputArr, ascending = true) {
-        let arr = [...inputArr];
-        this._checkSparse(arr);
-        let comparisons = 0;
-        let swaps = 0;
-        for (let i = 0; i < arr.length; i++) {
-            let minMaxIdx = i;
-            for (let j = i + 1; j < arr.length; j++) {
+    
+    selectionSort: function(arr, ascending = true) {
+        let { clean, undefinedCount } = this.preprocessArray(arr);
+        let n = clean.length;
+        let comparisons = 0, swaps = 0;
+
+        for (let i = 0; i < n - 1; i++) {
+            let targetIdx = i;
+            for (let j = i + 1; j < n; j++) {
                 comparisons++;
-                let condition = ascending ? arr[j] < arr[minMaxIdx] : arr[j] > arr[minMaxIdx];
-                if (condition) minMaxIdx = j;
+                if (ascending ? clean[j] < clean[targetIdx] : clean[j] > clean[targetIdx]) {
+                    targetIdx = j;
+                }
             }
-            if (minMaxIdx !== i) {
-                [arr[i], arr[minMaxIdx]] = [arr[minMaxIdx], arr[i]];
+            if (targetIdx !== i) {
+                [clean[i], clean[targetIdx]] = [clean[targetIdx], clean[i]];
                 swaps++;
             }
         }
-        console.log("Метод мінімальних елементів - Порівнянь: " + comparisons + ", Обмінів: " + swaps);
-        return arr;
+        this.postprocessArray(arr, clean, undefinedCount);
+        this.printStats("Сортування мінімальних елементів", comparisons, swaps, undefinedCount > 0);
     },
 
-    insertionSort: function(inputArr, ascending = true) {
-        let arr = [...inputArr];
-        this._checkSparse(arr);
-        let comparisons = 0;
-        let moves = 0;
-        for (let i = 1; i < arr.length; i++) {
-            let key = arr[i];
+   
+    insertionSort: function(arr, ascending = true) {
+        let { clean, undefinedCount } = this.preprocessArray(arr);
+        let n = clean.length;
+        let comparisons = 0, swaps = 0;
+
+        for (let i = 1; i < n; i++) {
+            let key = clean[i];
             let j = i - 1;
             while (j >= 0) {
                 comparisons++;
-                let condition = ascending ? arr[j] > key : arr[j] < key;
-                if (condition) {
-                    arr[j + 1] = arr[j];
+                if (ascending ? clean[j] > key : clean[j] < key) {
+                    clean[j + 1] = clean[j];
+                    swaps++;
                     j--;
-                    moves++;
                 } else break;
             }
-            arr[j + 1] = key;
+            clean[j + 1] = key;
         }
-        console.log("Метод вставок - Порівнянь: " + comparisons + ", Переміщень: " + moves);
-        return arr;
+        this.postprocessArray(arr, clean, undefinedCount);
+        this.printStats("Сортування вставками", comparisons, swaps, undefinedCount > 0);
     },
 
-    shellSort: function(inputArr, ascending = true) {
-        let arr = [...inputArr];
-        this._checkSparse(arr);
-        let comparisons = 0;
-        let moves = 0;
-        let n = arr.length;
+   
+    shellSort: function(arr, ascending = true) {
+        let { clean, undefinedCount } = this.preprocessArray(arr);
+        let n = clean.length;
+        let comparisons = 0, swaps = 0;
+
         for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
             for (let i = gap; i < n; i++) {
-                let temp = arr[i];
+                let temp = clean[i];
                 let j = i;
                 while (j >= gap) {
                     comparisons++;
-                    let condition = ascending ? arr[j - gap] > temp : arr[j - gap] < temp;
-                    if (condition) {
-                        arr[j] = arr[j - gap];
+                    if (ascending ? clean[j - gap] > temp : clean[j - gap] < temp) {
+                        clean[j] = clean[j - gap];
+                        swaps++;
                         j -= gap;
-                        moves++;
                     } else break;
                 }
-                arr[j] = temp;
+                clean[j] = temp;
             }
         }
-        console.log("Метод Шелла - Порівнянь: " + comparisons + ", Переміщень: " + moves);
-        return arr;
+        this.postprocessArray(arr, clean, undefinedCount);
+        this.printStats("Сортування Шелла", comparisons, swaps, undefinedCount > 0);
     },
 
-    quickSort: function(inputArr, ascending = true) {
-        let arr = [...inputArr];
-        this._checkSparse(arr);
-        let comparisons = 0;
-        let swaps = 0;
-        const partition = (low, high) => {
-            let pivot = arr[Math.floor((low + high) / 2)];
-            let i = low;
-            let j = high;
+    
+    quickSort: function(arr, ascending = true) {
+        let { clean, undefinedCount } = this.preprocessArray(arr);
+        let comparisons = 0, swaps = 0;
+
+        const sort = (data, left, right) => {
+            if (left >= right) return;
+            let pivot = data[Math.floor((left + right) / 2)];
+            let i = left, j = right;
+
             while (i <= j) {
-                while (ascending ? arr[i] < pivot : arr[i] > pivot) { i++; comparisons++; }
-                while (ascending ? arr[j] > pivot : arr[j] < pivot) { j--; comparisons++; }
+                while (ascending ? data[i] < pivot : data[i] > pivot) { i++; comparisons++; }
+                while (ascending ? data[j] > pivot : data[j] < pivot) { j--; comparisons++; }
                 if (i <= j) {
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                    [data[i], data[j]] = [data[j], data[i]];
                     swaps++;
-                    i++;
-                    j--;
+                    i++; j--;
                 }
             }
-            return i;
+            sort(data, left, j);
+            sort(data, i, right);
         };
-        const sort = (low, high) => {
-            let index = partition(low, high);
-            if (low < index - 1) sort(low, index - 1);
-            if (index < high) sort(index, high);
-        };
-        if (arr.length > 1) sort(0, arr.length - 1);
-        console.log("Метод Хоара (Quick) - Порівнянь: ~" + comparisons + ", Обмінів: " + swaps);
-        return arr;
+
+        sort(clean, 0, clean.length - 1);
+        this.postprocessArray(arr, clean, undefinedCount);
+        this.printStats("Сортування Хоара (QuickSort)", comparisons, swaps, undefinedCount > 0);
     }
 };
