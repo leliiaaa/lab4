@@ -4,6 +4,10 @@ function generateArray(size) {
 
 const baseArr = generateArray(100);
 
+console.log("%c ПОЧАТКОВИЙ МАСИВ (100 елементів) ", "background: #ff00ff; color: #fff");
+console.log(baseArr);
+console.log("--------------------------------------------------");
+
 console.log("%c 1. Нерозріджений масив (100 елементів) ", "background: #ff00ff; color: #fff");
 SortLib.bubbleSort([...baseArr]);
 SortLib.selectionSort([...baseArr]);
