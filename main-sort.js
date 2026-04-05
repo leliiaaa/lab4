@@ -21,4 +21,3 @@ let sparseArr = generateArray(50);
 sparseArr.length = 100; 
 
 SortLib.quickSort(sparseArr, true);
-console.log("Вигляд масиву після сортування (undefined знаходитьмя у кінці):", sparseArr);
