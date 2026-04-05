@@ -11,7 +11,7 @@ SortLib.insertionSort([...baseArr]);
 SortLib.shellSort([...baseArr]);
 SortLib.quickSort([...baseArr]);
 
-console.log("%c 2. Розріджений масив (100 елементів) ", "background: #ff00ff; color: #ff69b4");
+console.log("%c 2. Розріджений масив (100 елементів) ", "background: #ff00ff; color: #fff");
 
 let sparseArr = generateArray(50);
 sparseArr.length = 100; 
