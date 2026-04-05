@@ -16,5 +16,5 @@ console.log("%c 2. Розріджений масив (100 елементів) ",
 let sparseArr = generateArray(50);
 sparseArr.length = 100; 
 
-MySortLib.quickSort(sparseArr, true);
+SortLib.quickSort(sparseArr, true);
 console.log("Вигляд масиву після сортування (undefined знаходитьмя у кінці):", sparseArr);
