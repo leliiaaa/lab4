@@ -20,4 +20,7 @@ console.log("%c 2. Розріджений масив (100 елементів) ",
 let sparseArr = generateArray(50);
 sparseArr.length = 100; 
 
+console.log("%c РОЗРІДЖЕНИЙ МАСИВ ДО СОРТУВАННЯ: ", "background: #ff00ff; color: #fff");
+console.log(sparseArr);
+console.log("--------------------------------------------------");
 SortLib.quickSort(sparseArr, true);
